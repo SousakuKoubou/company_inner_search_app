@@ -121,10 +121,16 @@ def initialize_retriever():
     # 埋め込みモデルの用意
     embeddings = OpenAIEmbeddings()
     
+    #1チャンクあたりの文字数
+    CHUNK_SIZE = 500
+    
+    # チャンク分割の重複部分の文字数
+    CHUNK_OVERLAP = 50
+    
     # チャンク分割用のオブジェクトを作成
     text_splitter = CharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50,
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
         separator="\n"
     )
 
@@ -134,9 +140,11 @@ def initialize_retriever():
     # ベクターストアの作成
     db = Chroma.from_documents(splitted_docs, embedding=embeddings)
 
-    # ベクターストアを検索するRetrieverの作成
-    st.session_state.retriever = db.as_retriever(search_kwargs={"k": 3})
+    #ドキュメント数
+    search_number = 5
 
+    # ベクターストアを検索するRetrieverの作成
+    st.session_state.retriever = db.as_retriever(search_kwargs={"k": search_number})
 
 def initialize_session_state():
     """
