@@ -59,7 +59,7 @@ if not "initialized" in st.session_state:
 #　サイドバーの表示
 with st.sidebar:
     #　小見出し
-    st.markdown("利用目的")
+    st.markdown("**利用目的**")
     # モード表示
     cn.display_select_mode()
     #　区切り線
